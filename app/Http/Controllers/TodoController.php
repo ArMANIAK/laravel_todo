@@ -22,4 +22,20 @@ class TodoController extends Controller
             }),
             'statuses' => TodoStatus::all()]);
     }
+
+    public function createTodoItem(Request $request) : int
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'start_datetime' => 'required'
+        ]);
+
+        $todo = new Todo();
+        $todo->title = $request->input('title');
+        $todo->status = $request->input('status') ? $request->input('status') : 1;
+        $todo->start_datetime = $request->input('start_datetime');
+        $todo->end_datetime = $request->input('end_datetime');
+        $todo->save();
+        return $todo->id;
+    }
 }
