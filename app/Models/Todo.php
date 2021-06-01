@@ -9,4 +9,7 @@ class Todo extends Model
 {
     use HasFactory;
 
+    protected $attributes = [
+        'status' => 1
+    ];
 }
