@@ -17,4 +17,5 @@ use App\Http\Controllers\TodoController;
 Route::get('/', [TodoController::class, 'index'])->name('todoList');
 Route::post('/', [TodoController::class, 'store'])->name('store');
 Route::resource('todo', TodoController::class);
+Route::get('/run/{id}', [TodoController::class, 'run']);
 

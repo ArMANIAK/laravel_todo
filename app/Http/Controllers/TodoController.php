@@ -56,4 +56,22 @@ class TodoController extends Controller
         return redirect()->route('todo.index');
     }
 
+    public function run($todo_id)
+    {
+        $todo = Todo::find($todo_id);
+        $statuses = TodoStatus::all()->pluck('status', 'id')->all();
+        if ($todo->start_datetime > date('Y-m-d H:i:s'))
+        {
+            $todo->status = array_search('deferred', $statuses);
+        }
+        elseif (isset($todo->end_datetime) && $todo->end_datetime < date('Y-m-d H:i:s')) {
+            $todo->status = array_search('cancelled', $statuses);
+        }
+        else
+        {
+            $todo->status = array_search('in_progress', $statuses);
+        }
+        $todo->save();
+        return $todo->status;
+    }
 }
