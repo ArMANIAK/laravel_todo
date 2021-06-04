@@ -12,7 +12,7 @@ use App\Models\TodoStatus;
 class TodoController extends Controller
 {
     use ValidatesRequests;
-    
+
     public function index()
     {
         return view('todo_list', [
@@ -23,7 +23,7 @@ class TodoController extends Controller
             'statuses' => TodoStatus::all()]);
     }
 
-    public function createTodoItem(Request $request) : int
+    public function store(Request $request) : int
     {
         $this->validate($request, [
             'title' => 'required',
