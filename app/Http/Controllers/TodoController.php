@@ -38,4 +38,22 @@ class TodoController extends Controller
         $todo->save();
         return $todo->id;
     }
+
+    public function update(Request $request, $todo_id)
+    {
+        $todo = Todo::find($todo_id);
+        foreach($request->request as $prop => $value)
+        {
+            $todo[$prop] = $value;
+        }
+        $todo->save();
+    }
+
+    public function destroy($todo_id)
+    {
+        $todo = Todo::find($todo_id);
+        $todo->delete();
+        return redirect()->route('todo.index');
+    }
+
 }
