@@ -74,4 +74,22 @@ class TodoController extends Controller
         $todo->save();
         return $todo->status;
     }
+
+    public function archive()
+    {
+        $statuses = TodoStatus::all()->pluck('status', 'id')->filter(function ($value, $key) {
+            return $value === 'archived' || $value === 'finished' || $value === 'cancelled';
+        })->all();
+
+        $todos = Todo::all();
+        
+        foreach ($todos as $todo)
+        {
+            if (array_key_exists($todo->status, $statuses))
+            {
+                $todo->status = array_search('archived', $statuses);
+                $todo->save();
+            }
+        }
+    }
 }
